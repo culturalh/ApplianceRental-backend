@@ -24,4 +24,26 @@
             <if test="role != null || role != ''">and u.role = #{role}</if>
         </where>
     </select>
+
+
+    <select id="selectByRoleAndUsername" resultType="com.jxau.li.model.User">
+        select
+        u.id as id,
+        u.username as username,
+        u.password as password,
+        u.name as name,
+        u.gender as gender,
+        u.age as age,
+        u.role as role,
+        u.phone as phone,
+        u.picture as picture,
+        u.email as email
+        from
+        user u
+        <where>
+            1 = 1
+            <if test="username != null || username != ''">and u.username = #{username}</if>
+            <if test="role != null || role != ''">and u.role = #{role}</if>
+        </where>
+    </select>
 </mapper>

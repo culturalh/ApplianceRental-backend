@@ -11,6 +11,8 @@ import com.jxau.li.exception.CustomException;
 import com.jxau.li.mapper.LoginMapper;
 import com.jxau.li.model.User;
 import com.jxau.li.model.dto.UserDTO;
+import com.jxau.li.model.req.LoginReq;
+import com.jxau.li.model.resp.LoginResp;
 import com.jxau.li.model.resp.UserResp;
 import com.jxau.li.service.LoginService;
 import com.jxau.li.utils.JwtUtil;
@@ -34,35 +36,36 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
     private LoginMapper loginMapper;
 
 
-    @Override
-    public UserResp login(UserDTO userDTO) {
-
-        User dbUser =  loginMapper.selectByUsernameAndRole(userDTO);
-
-        if(ObjectUtil.isNull(dbUser)){
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-
-        //使用md5加密比对
-        if(!dbUser.getPassword().equals(MD5Util.MD5Upper(userDTO.getPassword(),saltValue))){
-            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
-        }
-
-        //将前端传过来的role转换，0-管理员，1-用户，2-商家
-        if(RoleEnum.ROLE_ADMIN.getCODE().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_ADMIN.getMSG());
-        }else if(RoleEnum.ROLE_USER.getMSG().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_USER.getMSG());
-        }else if(RoleEnum.ROLE_LEASOR.getMSG().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_LEASOR.getMSG());
-        }
-
-        String token = JwtUtil.createToken(dbUser.getId(), dbUser.getRole());
-        dbUser.setToken(token);
-        UserResp userResp = new UserResp();
-        BeanUtils.copyProperties(dbUser,userResp);
-        return userResp;
-    }
+//    @Override
+//    public UserResp login(UserDTO userDTO) {
+//
+//        //根据用户名和角色查询用户
+//        User dbUser =  loginMapper.selectByUsernameAndRole(userDTO);
+//
+//        if(ObjectUtil.isNull(dbUser)){
+//            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+//        }
+//
+//        //使用md5加密比对
+//        if(!dbUser.getPassword().equals(MD5Util.MD5Upper(userDTO.getPassword(),saltValue))){
+//            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
+//        }
+//
+//        //将前端传过来的role转换，0-管理员，1-用户，2-商家
+//        if(RoleEnum.ROLE_ADMIN.getCODE().equals(dbUser.getRole())){
+//            dbUser.setRole(RoleEnum.ROLE_ADMIN.getMSG());
+//        }else if(RoleEnum.ROLE_USER.getMSG().equals(dbUser.getRole())){
+//            dbUser.setRole(RoleEnum.ROLE_USER.getMSG());
+//        }else if(RoleEnum.ROLE_LEASOR.getMSG().equals(dbUser.getRole())){
+//            dbUser.setRole(RoleEnum.ROLE_LEASOR.getMSG());
+//        }
+//
+//        String token = JwtUtil.createToken(dbUser.getId(), dbUser.getRole());
+//        dbUser.setToken(token);
+//        UserResp userResp = new UserResp();
+//        BeanUtils.copyProperties(dbUser,userResp);
+//        return userResp;
+//    }
 
     @Override
     public boolean register(UserDTO userDTO) {
@@ -93,5 +96,41 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
         return true;
+    }
+
+    @Override
+    public LoginResp login(LoginReq loginReq) {
+
+        //根据用户名和角色查询用户
+        User dbUser =  loginMapper.selectByRoleAndUsername(loginReq);
+
+        //如果数据库查询用户不存在，则提示请先注册
+        if(ObjectUtil.isNull(dbUser)){
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+
+        //使用md5加密比对
+        //todo 测试先注释
+//        if(!dbUser.getPassword().equals(MD5Util.MD5Upper(loginReq.getPassword(),saltValue))){
+//            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
+//        }
+
+        //将前端传过来的role转换，0-管理员，1-用户，2-商家
+        if(RoleEnum.ROLE_ADMIN.getCODE().equals(dbUser.getRole())){
+            dbUser.setRole(RoleEnum.ROLE_ADMIN.getMSG());
+        }else if(RoleEnum.ROLE_USER.getMSG().equals(dbUser.getRole())){
+            dbUser.setRole(RoleEnum.ROLE_USER.getMSG());
+        }else if(RoleEnum.ROLE_LEASOR.getMSG().equals(dbUser.getRole())){
+            dbUser.setRole(RoleEnum.ROLE_LEASOR.getMSG());
+        }
+
+        //根据主键和角色创建token
+        String token = JwtUtil.createToken(dbUser.getId(), dbUser.getRole());
+
+        LoginResp loginResp = new LoginResp();
+        loginResp.setUsername(dbUser.getUsername());
+        loginResp.setRole(dbUser.getRole());
+        loginResp.setToken(token);
+        return loginResp;
     }
 }
