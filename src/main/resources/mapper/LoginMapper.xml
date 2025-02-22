@@ -14,7 +14,7 @@
             u.age as age,
             u.role as role,
             u.phone as phone,
-            u.picture as picture,
+            u.avatar as avatar,
             u.email as email
         from
             user u
@@ -36,7 +36,7 @@
         u.age as age,
         u.role as role,
         u.phone as phone,
-        u.picture as picture,
+        u.avatar as avatar,
         u.email as email
         from
         user u

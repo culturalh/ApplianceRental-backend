@@ -2,14 +2,11 @@ package com.jxau.li.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.jxau.li.common.result.CommonResp;
-import com.jxau.li.common.result.Result;
 import com.jxau.li.enums.ResultCodeEnum;
 import com.jxau.li.exception.CustomException;
-import com.jxau.li.model.User;
 import com.jxau.li.model.dto.UserDTO;
 import com.jxau.li.model.req.LoginReq;
 import com.jxau.li.model.resp.LoginResp;
-import com.jxau.li.model.resp.UserResp;
 import com.jxau.li.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

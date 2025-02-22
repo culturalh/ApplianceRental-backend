@@ -2,9 +2,10 @@ package com.jxau.li.enums;
 
 public enum RoleEnum {
 
-    ROLE_ADMIN("0","管理员"),
-    ROLE_USER("1","用户"),
-    ROLE_LEASOR("2","商家");
+    //管理员admin，用户user，商家merchant
+    ROLE_ADMIN("0","admin"),
+    ROLE_USER("1","user"),
+    ROLE_MERCHANT("2","merchant");
 
 
     private String CODE;

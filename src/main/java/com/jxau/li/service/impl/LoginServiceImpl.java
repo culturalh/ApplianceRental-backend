@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jxau.li.common.result.Constants;
 import com.jxau.li.common.result.Result;
 import com.jxau.li.enums.ResultCodeEnum;
 import com.jxau.li.enums.RoleEnum;
@@ -87,8 +88,8 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
                 newUser.setRole(RoleEnum.ROLE_ADMIN.getCODE());
             }else if(RoleEnum.ROLE_USER.getMSG().equals(newUser.getRole())){
                 newUser.setRole(RoleEnum.ROLE_USER.getCODE());
-            }else if(RoleEnum.ROLE_LEASOR.getMSG().equals(newUser.getRole())){
-                newUser.setRole(RoleEnum.ROLE_LEASOR.getCODE());
+            }else if(RoleEnum.ROLE_MERCHANT.getMSG().equals(newUser.getRole())){
+                newUser.setRole(RoleEnum.ROLE_MERCHANT.getCODE());
             }
             loginMapper.insert(newUser);
         }else {
@@ -101,6 +102,9 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
     @Override
     public LoginResp login(LoginReq loginReq) {
 
+        //获取角色编码
+        String roleCode = roleNameToRoleCode(loginReq.getRole());
+        loginReq.setRole(roleCode);
         //根据用户名和角色查询用户
         User dbUser =  loginMapper.selectByRoleAndUsername(loginReq);
 
@@ -110,19 +114,13 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
         }
 
         //使用md5加密比对
-        //todo 测试先注释
-//        if(!dbUser.getPassword().equals(MD5Util.MD5Upper(loginReq.getPassword(),saltValue))){
-//            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
-//        }
-
-        //将前端传过来的role转换，0-管理员，1-用户，2-商家
-        if(RoleEnum.ROLE_ADMIN.getCODE().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_ADMIN.getMSG());
-        }else if(RoleEnum.ROLE_USER.getMSG().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_USER.getMSG());
-        }else if(RoleEnum.ROLE_LEASOR.getMSG().equals(dbUser.getRole())){
-            dbUser.setRole(RoleEnum.ROLE_LEASOR.getMSG());
+        if(!dbUser.getPassword().equals(MD5Util.MD5Upper(loginReq.getPassword(),saltValue))){
+            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
         }
+
+        //角色编码转角色名称
+        String roleName = roleCodeToRoleName(dbUser.getRole());
+        dbUser.setRole(roleName);
 
         //根据主键和角色创建token
         String token = JwtUtil.createToken(dbUser.getId(), dbUser.getRole());
@@ -132,5 +130,33 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
         loginResp.setRole(dbUser.getRole());
         loginResp.setToken(token);
         return loginResp;
+    }
+
+    //角色名称转角色编码
+    private String roleNameToRoleCode(String roleName) {
+        String roleCode = "" ;
+        //将前端传过来的role转换，0-管理员，1-用户，2-商家
+        if(RoleEnum.ROLE_ADMIN.getMSG().equals(roleName)){
+            roleCode = RoleEnum.ROLE_ADMIN.getCODE();
+        }else if(RoleEnum.ROLE_USER.getMSG().equals(roleName)){
+            roleCode = RoleEnum.ROLE_USER.getCODE();
+        }else if(RoleEnum.ROLE_MERCHANT.getMSG().equals(roleName)){
+            roleCode =RoleEnum.ROLE_MERCHANT.getCODE();
+        }
+        return roleCode;
+    }
+
+    //角色编码转角色名称
+    private String roleCodeToRoleName(String roleCode) {
+        String roleName = "" ;
+        //将前端传过来的role转换，0-管理员，1-用户，2-商家
+        if(RoleEnum.ROLE_ADMIN.getCODE().equals(roleCode)){
+            roleName = Constants.ROLE_ADMIN;
+        }else if(RoleEnum.ROLE_USER.getCODE().equals(roleCode)){
+            roleName = Constants.ROLE_USER;
+        }else if(RoleEnum.ROLE_MERCHANT.getCODE().equals(roleCode)){
+            roleName = Constants.ROLE_MERCHANT;
+        }
+        return roleName;
     }
 }

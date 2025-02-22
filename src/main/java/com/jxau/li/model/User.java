@@ -48,12 +48,17 @@ public class User {
   /**
    * 头像
    */
-  private String picture;
+  private String avatar;
 
   /**
    * 电子邮件
    */
   private String email;
+
+  /**
+   * 状态
+   */
+  private String isActived;
 
   /**
    * token验证
@@ -64,7 +69,7 @@ public class User {
   public User() {
   }
 
-  public User(long id, String username, String password, String name, String gender, long age, String role, String phone, String picture, String email) {
+  public User(long id, String username, String password, String name, String gender, long age, String role, String phone, String avatar, String email) {
     this.id = id;
     this.username = username;
     this.password = password;
@@ -73,22 +78,16 @@ public class User {
     this.age = age;
     this.role = role;
     this.phone = phone;
-    this.picture = picture;
+    this.avatar = avatar;
     this.email = email;
   }
 
-  public User(long id, String username, String password, String name, String gender, long age, String role, String phone, String picture, String email, String token) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.name = name;
-    this.gender = gender;
-    this.age = age;
-    this.role = role;
-    this.phone = phone;
-    this.picture = picture;
-    this.email = email;
-    this.token = token;
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   /**
@@ -219,21 +218,7 @@ public class User {
     this.phone = phone;
   }
 
-  /**
-   * 获取
-   * @return picture
-   */
-  public String getPicture() {
-    return picture;
-  }
 
-  /**
-   * 设置
-   * @param picture
-   */
-  public void setPicture(String picture) {
-    this.picture = picture;
-  }
 
   /**
    * 获取
@@ -251,6 +236,13 @@ public class User {
     this.email = email;
   }
 
+  public String getIsActived() {
+    return isActived;
+  }
+
+  public void setIsActived(String isActived) {
+    this.isActived = isActived;
+  }
 
   /**
    * 获取
@@ -260,16 +252,30 @@ public class User {
     return token;
   }
 
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", password='" + password + '\'' +
+            ", name='" + name + '\'' +
+            ", gender='" + gender + '\'' +
+            ", age=" + age +
+            ", role='" + role + '\'' +
+            ", phone='" + phone + '\'' +
+            ", avatar='" + avatar + '\'' +
+            ", email='" + email + '\'' +
+            ", isActived='" + isActived + '\'' +
+            ", token='" + token + '\'' +
+            '}';
+  }
+
   /**
    * 设置
    * @param token
    */
   public void setToken(String token) {
     this.token = token;
-  }
-
-  public String toString() {
-    return "User{id = " + id + ", username = " + username + ", password = " + password + ", name = " + name + ", gender = " + gender + ", age = " + age + ", role = " + role + ", phone = " + phone + ", picture = " + picture + ", email = " + email + "}";
   }
 
 }

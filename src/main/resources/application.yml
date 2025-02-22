@@ -12,6 +12,11 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+
+#保存图片文件路劲 需要以/结尾
+file:
+  upload-dir: D:/code/system/ApplianceRentalSystem/src/main/java/com/jxau/li/image/
+
 #  redis:
 #    host: localhost
 #    port: 6379
@@ -27,6 +32,8 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+
 
 # 分页
 #pagehelper:

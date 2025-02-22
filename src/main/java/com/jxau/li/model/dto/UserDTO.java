@@ -40,7 +40,7 @@ public class UserDTO {
     /**
      * 头像
      */
-    private String picture;
+    private String avatar;
 
     /**
      * 电子邮件
@@ -50,7 +50,7 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String username, String password, String name, String gender, long age, String role, String phone, String picture, String email) {
+    public UserDTO(String username, String password, String name, String gender, long age, String role, String phone, String avatar, String email) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -58,7 +58,7 @@ public class UserDTO {
         this.age = age;
         this.role = role;
         this.phone = phone;
-        this.picture = picture;
+        this.avatar = avatar;
         this.email = email;
     }
 
@@ -178,16 +178,16 @@ public class UserDTO {
      * 获取
      * @return picture
      */
-    public String getPicture() {
-        return picture;
+    public String getAvatar() {
+        return avatar;
     }
 
     /**
      * 设置
-     * @param picture
+     * @param avatar
      */
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     /**
@@ -207,6 +207,6 @@ public class UserDTO {
     }
 
     public String toString() {
-        return "UserDTO{username = " + username + ", password = " + password + ", name = " + name + ", gender = " + gender + ", age = " + age + ", role = " + role + ", phone = " + phone + ", picture = " + picture + ", email = " + email + "}";
+        return "UserDTO{username = " + username + ", password = " + password + ", name = " + name + ", gender = " + gender + ", age = " + age + ", role = " + role + ", phone = " + phone + ", avatar = " + avatar + ", email = " + email + "}";
     }
 }

@@ -41,7 +41,7 @@ public class UserResp {
     /**
      * 头像
      */
-    private String picture;
+    private String avatar;
 
     /**
      * 电子邮件
@@ -58,7 +58,7 @@ public class UserResp {
     public UserResp() {
     }
 
-    public UserResp(long id, String username, String name, String gender, long age, String role, String phone, String picture, String email, String token) {
+    public UserResp(long id, String username, String name, String gender, long age, String role, String phone, String avatar, String email, String token) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -66,7 +66,7 @@ public class UserResp {
         this.age = age;
         this.role = role;
         this.phone = phone;
-        this.picture = picture;
+        this.avatar = avatar;
         this.email = email;
         this.token = token;
     }
@@ -185,18 +185,18 @@ public class UserResp {
 
     /**
      * 获取
-     * @return picture
+     * @return avatar
      */
-    public String getPicture() {
-        return picture;
+    public String getAvatar() {
+        return avatar;
     }
 
     /**
      * 设置
-     * @param picture
+     * @param avatar
      */
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     /**
@@ -232,6 +232,6 @@ public class UserResp {
     }
 
     public String toString() {
-        return "UserResp{id = " + id + ", username = " + username + ", name = " + name + ", gender = " + gender + ", age = " + age + ", role = " + role + ", phone = " + phone + ", picture = " + picture + ", email = " + email + ", token = " + token + "}";
+        return "UserResp{id = " + id + ", username = " + username + ", name = " + name + ", gender = " + gender + ", age = " + age + ", role = " + role + ", phone = " + phone + ", avatar = " + avatar + ", email = " + email + ", token = " + token + "}";
     }
 }
