@@ -37,4 +37,10 @@ public interface ApplianceClassifyService extends IService<ApplianceCategories> 
      * @return
      */
     boolean delete(Integer id);
+
+    /**
+     * 根据状态查询分类
+     * @return
+     */
+    List<ApplianceClassifyResp> getByStatus();
 }

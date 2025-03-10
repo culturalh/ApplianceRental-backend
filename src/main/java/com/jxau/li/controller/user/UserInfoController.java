@@ -1,6 +1,7 @@
 package com.jxau.li.controller.user;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
 import com.jxau.li.common.result.Constants;
 import com.jxau.li.controller.FileController;
@@ -54,6 +55,7 @@ public class UserInfoController {
      * @param email
      * @return
      */
+    @LogOperation(type ="用户更新信息操作")
     @PostMapping("/update")
     public CommonResp<String> updateUserInfo(
             @RequestParam(value = "avatar", required = false) MultipartFile avatar, // 允许 avatar 为空

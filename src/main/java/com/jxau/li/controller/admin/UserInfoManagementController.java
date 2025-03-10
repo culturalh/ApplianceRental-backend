@@ -1,5 +1,6 @@
 package com.jxau.li.controller.admin;
 
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
 import com.jxau.li.model.req.UserInfoReq;
 import com.jxau.li.model.resp.UserInfoResp;
@@ -44,6 +45,7 @@ public class UserInfoManagementController {
     /**
      * 启用禁用商家
      */
+    @LogOperation(type ="管理员启用/禁用普通用户操作")
     @PostMapping("/update")
     public CommonResp<String> updateUserInfo(@RequestBody UserInfoReq userInfoReq){
         /**

@@ -1,5 +1,6 @@
 package com.jxau.li.controller.admin;
 
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
 import com.jxau.li.common.result.Constants;
 import com.jxau.li.model.req.NotificationReq;
@@ -33,6 +34,7 @@ public class NotificationController {
     /**
      * 增加通知
      */
+    @LogOperation(type ="管理员增加系统通知操作")
     @PostMapping("/add")
     public CommonResp<String> addNotification(@RequestBody NotificationReq notificationReq) {
 
@@ -48,6 +50,7 @@ public class NotificationController {
     /**
      * 修改通知
      */
+    @LogOperation(type ="管理员更新系统通知操作")
     @RequestMapping("/update")
     public CommonResp<String> updateNotification(@RequestBody NotificationReq notificationReq) {
 
@@ -63,6 +66,7 @@ public class NotificationController {
     /**
      * 删除通知
      */
+    @LogOperation(type ="管理员删除系统通知操作")
     @DeleteMapping("/delete/{id}")
     public CommonResp<String> deleteNotification(@PathVariable("id") Integer id) {
 

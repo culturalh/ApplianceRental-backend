@@ -1,5 +1,6 @@
 package com.jxau.li.controller.admin;
 
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
 import com.jxau.li.common.result.Constants;
 import com.jxau.li.model.req.ApplianceClassifyReq;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/applianceClassify")
+
 public class ApplianceClassifyController {
 
     //注入service
@@ -33,6 +35,7 @@ public class ApplianceClassifyController {
      * 增加通知
      */
     @PostMapping("/add")
+    @LogOperation(type ="管理员发布家电分类操作")
     public CommonResp<String> addApplianceClassify(@RequestBody ApplianceClassifyReq applianceClassifyReq) {
 
         boolean flag = applianceClassifyService.add(applianceClassifyReq);
@@ -47,6 +50,7 @@ public class ApplianceClassifyController {
      * 修改通知
      */
     @RequestMapping("/update")
+    @LogOperation(type ="管理员修改家电分类操作")
     public CommonResp<String> updateApplianceClassify(@RequestBody ApplianceClassifyReq applianceClassifyReq) {
 
         boolean flag = applianceClassifyService.update(applianceClassifyReq);
@@ -61,6 +65,7 @@ public class ApplianceClassifyController {
      * 删除通知
      */
     @DeleteMapping("/delete/{categoryId}")
+    @LogOperation(type ="管理员删除家电分类操作")
     public CommonResp<String> deleteApplianceClassify(@PathVariable("categoryId") Integer id) {
 
         boolean flag = applianceClassifyService.delete(id);

@@ -7,7 +7,7 @@ public enum ResultCodeEnum {
     TOKEN_INVALID_ERROR("401", "无效的token"),
     TOKEN_CHECK_ERROR("401", "token验证失败，请重新登录"),
     PARAM_LOST_ERROR("4001", "参数缺失"),
-
+    REPEAT_AVATAR_ERROR("4002", "，上传头像不正确，请重新上传"),
     SYSTEM_ERROR("500", "系统异常"),
     USER_EXIST_ERROR("5001", "用户名已存在"),
     USER_NOT_LOGIN("5002", "用户未登录"),
@@ -19,6 +19,8 @@ public enum ResultCodeEnum {
     CATEGORY_NOT_DELETE_ERROR("5007", "该分类下有商品数据，禁止删除"),
     CIRCLES_EXIST_ERROR("5008", "该圈子已存在"),
     CIRCLES_NOT_DELETE_ERROR("5009", "该圈子下有帖子数据，禁止删除"),
+    USER_IS_ACTIVE_ERROR("5010", "用户已被禁用"),
+
     ;
 
     public String code;

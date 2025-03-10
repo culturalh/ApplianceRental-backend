@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jxau.li.common.context.LoginContext;
 import com.jxau.li.common.result.Constants;
 import com.jxau.li.common.result.Result;
 import com.jxau.li.enums.ResultCodeEnum;
@@ -91,6 +92,7 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
             }else if(RoleEnum.ROLE_MERCHANT.getMSG().equals(newUser.getRole())){
                 newUser.setRole(RoleEnum.ROLE_MERCHANT.getCODE());
             }
+            newUser.setIsActived(Constants.USER_IS_ACTIVE_USE);
             loginMapper.insert(newUser);
         }else {
             //如果存在，则抛出异常
@@ -118,14 +120,20 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper,User> implements L
             throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
         }
 
+        //用户是否被禁用，is_actived为1则是禁用状态
+        if(Constants.USER_IS_ACTIVE.equals(dbUser.getIsActived())){
+            throw new CustomException(ResultCodeEnum.USER_IS_ACTIVE_ERROR);
+        }
+
         //角色编码转角色名称
         String roleName = roleCodeToRoleName(dbUser.getRole());
         dbUser.setRole(roleName);
 
         //根据主键和角色创建token
         String token = JwtUtil.createToken(dbUser.getId(), dbUser.getRole());
-
+        System.out.println("token字符串：" + token);
         LoginResp loginResp = new LoginResp();
+        loginResp.setId(dbUser.getId());
         loginResp.setUsername(dbUser.getUsername());
         loginResp.setRole(dbUser.getRole());
         loginResp.setToken(token);

@@ -6,9 +6,12 @@ public class Constants {
 
     public static final String USER_DEFAULT_PASSWORD = "123456";
 
+    public static final String USER_IS_ACTIVE = "1";//1为禁用状态
+
+    public static final String USER_IS_ACTIVE_USE = "0";//0为启用状态
     public static final String ROLE_ADMIN = "管理员";
 
-    public static final String ROLE_USER = "用户";
+    public static final String ROLE_USER = "普通用户";
 
     public static final String ROLE_MERCHANT = "商家";
 

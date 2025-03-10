@@ -37,7 +37,8 @@
         u.role as role,
         u.phone as phone,
         u.avatar as avatar,
-        u.email as email
+        u.email as email,
+        u.is_actived as isActived
         from
         user u
         <where>

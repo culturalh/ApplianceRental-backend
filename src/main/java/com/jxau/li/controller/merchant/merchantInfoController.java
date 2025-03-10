@@ -1,5 +1,6 @@
 package com.jxau.li.controller.merchant;
 
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
 import com.jxau.li.common.result.Constants;
 import com.jxau.li.controller.FileController;
@@ -51,6 +52,7 @@ public class merchantInfoController {
      * @param email
      * @return
      */
+    @LogOperation(type ="商家更新信息操作")
     @PostMapping("/update")
     public CommonResp<String> updateUserInfo(
             @RequestParam(value = "avatar", required = false) MultipartFile avatar, // 允许 avatar 为空

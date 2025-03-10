@@ -74,4 +74,12 @@ public class ApplianceClassifyServiceImpl extends ServiceImpl<ApplianceClassifyM
         }
         return false;
     }
+
+    @Override
+    public List<ApplianceClassifyResp> getByStatus() {
+        LambdaQueryWrapper<ApplianceCategories> applianceCategoriesLambdaQueryWrapper = new LambdaQueryWrapper<ApplianceCategories>().eq(ApplianceCategories::getIsActive, "1");
+        List<ApplianceCategories> applianceCategories = applianceClassifyMapper.selectList(applianceCategoriesLambdaQueryWrapper);
+        List<ApplianceClassifyResp> applianceClassifyResps = BeanUtil.copyToList(applianceCategories, ApplianceClassifyResp.class);
+        return applianceClassifyResps;
+    }
 }

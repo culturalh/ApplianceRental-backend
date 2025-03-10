@@ -1,6 +1,8 @@
 package com.jxau.li.controller.admin;
 
+import com.jxau.li.aspect.LogOperation;
 import com.jxau.li.common.result.CommonResp;
+import com.jxau.li.model.req.UserInfoReq;
 import com.jxau.li.model.resp.UserInfoResp;
 import com.jxau.li.service.MerchantInfoManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/merchantInfoManagement")
+
 public class MerchantInfoManagementController {
 
     @Autowired
@@ -43,11 +46,12 @@ public class MerchantInfoManagementController {
      * 启用禁用商家
      */
     @PostMapping("/update")
-    public CommonResp<String> updateUserInfo(@RequestParam("id") Long id,@RequestParam("status") String status){
+    @LogOperation(type ="管理员禁用/启用商家操作")
+    public CommonResp<String> updateUserInfo(@RequestBody UserInfoReq userInfoReq){
         /**
          * 更新用户状态
          */
-        boolean is_success = merchantInfoManagementService.updatemerchantInfoStatus(id,status);
+        boolean is_success = merchantInfoManagementService.updatemerchantInfoStatus(userInfoReq.getId(),userInfoReq.getIsActived());
         if(is_success){
             return new CommonResp<>("更新成功");
         }else {
